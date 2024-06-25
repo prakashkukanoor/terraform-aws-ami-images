@@ -18,7 +18,7 @@ variable "instance_type" {
 
 }
 
-variable "bastion_host" {
+variable "webserver_goldan_ami" {
   type    = bool
   default = false
 

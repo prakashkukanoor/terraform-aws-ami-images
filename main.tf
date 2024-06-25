@@ -25,34 +25,25 @@ data "aws_ami" "this" {
   }
 }
 
-resource "aws_instance" "bastion" {
-  count         = var.bastion_host ? 1 : 0
-  ami           = data.aws_ami.this.id
-  instance_type = var.instance_type
-
-  tags = merge(
-    local.comman_tags,
-    { Name = "BASTION-HOST-${var.environment}" }
-  )
-}
-
 resource "aws_instance" "webserver" {
+  count = var.webserver_goldan_ami ? 1 : 0
   ami           = data.aws_ami.this.id
   instance_type = var.instance_type
   user_data     = file("${path.module}/scripts/webserver.sh")
 
   tags = merge(
     local.comman_tags,
-    { Name = "IMAGE-${var.environment}" }
+    { Name = "WEBSERVER-IMAGE-${var.environment}" }
   )
 }
 
 resource "aws_ami_from_instance" "goldan_image" {
+  count = var.webserver_goldan_ami ? 1 : 0
   name               = "GOLDAN-IMAGE-${var.team}-${var.environment}"
-  source_instance_id = aws_instance.webserver.id
+  source_instance_id = aws_instance.webserver[0].id
 
   tags = merge(
     local.comman_tags,
-    { Name = "GOLDAN-IMAGE-${var.environment}" }
+    { Name = "WEBSERVER-GOLDAN-IMAGE-${var.environment}" }
   )
 }
