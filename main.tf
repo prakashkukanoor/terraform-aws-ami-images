@@ -26,7 +26,7 @@ data "aws_ami" "this" {
 }
 
 resource "aws_instance" "webserver" {
-  count = var.webserver_goldan_ami ? 1 : 0
+  count         = var.webserver_goldan_ami ? 1 : 0
   ami           = data.aws_ami.this.id
   instance_type = var.instance_type
   user_data     = file("${path.module}/scripts/webserver.sh")
@@ -38,7 +38,7 @@ resource "aws_instance" "webserver" {
 }
 
 resource "aws_ami_from_instance" "goldan_image" {
-  count = var.webserver_goldan_ami ? 1 : 0
+  count              = var.webserver_goldan_ami ? 1 : 0
   name               = "GOLDAN-IMAGE-${var.team}-${var.environment}"
   source_instance_id = aws_instance.webserver[0].id
 

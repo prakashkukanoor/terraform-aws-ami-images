@@ -10,6 +10,12 @@ variable "ami_filter" {
     virtualization_type = list(string)
     architecture        = list(string)
   })
+  default = {
+    owners              = ["amazon"]
+    ami_name            = ["al2023-ami-2023.4.20240611.0-kernel-6.1-x86_64"]
+    virtualization_type = ["hvm"]
+    architecture        = ["x86_64"]
+  }
 
 }
 

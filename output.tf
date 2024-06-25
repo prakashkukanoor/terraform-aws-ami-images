@@ -7,6 +7,6 @@ output "webserver_instance_id" {
 }
 
 output "goldan_image_id" {
-    value = aws_ami_from_instance.goldan_image[*].id
-  
+  value = aws_ami_from_instance.goldan_image[*].id
+
 }
